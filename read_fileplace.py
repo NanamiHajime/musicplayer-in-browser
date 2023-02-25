@@ -1,3 +1,4 @@
+#about database
 import sqlite3
 import os
 import glob
@@ -116,8 +117,7 @@ def get_musicdata_m4a(music_filepath):
 https://compute-cucco.hatenablog.com/entry/2019/07/21/204512
 '''
 
-def get_count():
-    table_name="musics"
+def get_count(table_name):
     cur=connect_db()[0]
     sql_count="SELECT COUNT (*) FROM {0}".format(table_name)
     #d is like (100, )
@@ -127,8 +127,8 @@ def get_count():
 
 def get_one_column_data_list(table_name, column_name,target_column_index=0):
     #行：row number
-    data_size=get_count()
-    data_list=[None]*data_size
+    data_size=get_count(table_name)
+    column_data_list=[None]*data_size
 
     sql_select="SELECT {0} FROM {1}".format(column_name,table_name)
 
@@ -136,18 +136,27 @@ def get_one_column_data_list(table_name, column_name,target_column_index=0):
     d=cur.execute(sql_select)
 
     for index, row in enumerate(d):
-        data_list[index]=row[target_column_index]
+        column_data_list[index]=row[target_column_index]
     cur.close()
 
-    return data_list
+    return column_data_list
 
-#debug
-"""
-con=sqlite3.connect("musics.sqlite")
-data_list=get_one_column_data_list(con, )
-print(data_list)
+#get all data list
+#list in dictionary [{"title":...}, {"title":...}]
+def get_one_row_data_dic(table_name, column_name):
+    row_data_dic=[]
+    cur=connect_db()[0]
 
-#CHECK DATABASE
-cur=connect_db()[0]
-cur.execute("SELECT * FROM musics")
-"""
+    for row_data_list in cur.execute(f"select * from {table_name}"):
+        row_data_dic.append({
+            "album":row_data_list[1],
+            "title":row_data_list[2],
+            "artist":row_data_list[3],
+            "tracknumber":row_data_list[4],
+            "total_tracknumber":row_data_list[5],
+            "genre":row_data_list[6],
+            "file_place":row_data_list[7],
+            "time_min":row_data_list[8],
+            "time_sec":row_data_list[9]
+        })
+    return row_data_dic
