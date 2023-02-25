@@ -19,7 +19,7 @@ def connect_db():
 def create_db():
     cur=connect_db()[0]
     cur.execute(
-        "CREATE TABLE musics(id INTEGER PRIMARY KEY AUTOINCREMENT, album STRING, title STRING, artist STRING, tracknumber INTEGER,total_tracknumber INTEGER, genre, INTEGER, file_place STRING UNIQUE, time_min INTEGER, time_sec INTEGER)"
+        "CREATE TABLE musics(id INTEGER PRIMARY KEY AUTOINCREMENT, album STRING, title STRING, artist STRING, tracknumber INTEGER,total_tracknumber INTEGER, genre, file_place STRING UNIQUE, time_min INTEGER, time_sec INTEGER)"
     )
 
     cur.close()
@@ -141,9 +141,6 @@ def get_one_column_data_list(table_name, column_name,target_column_index=0):
 
     return data_list
 
-def get_album_data_list():
-    get_one_column_data_list()
-
 #debug
 """
 con=sqlite3.connect("musics.sqlite")
@@ -154,4 +151,3 @@ print(data_list)
 cur=connect_db()[0]
 cur.execute("SELECT * FROM musics")
 """
-print(get_one_column_data_list("musics", "album"))

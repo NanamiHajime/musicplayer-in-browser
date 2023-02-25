@@ -1,7 +1,6 @@
 import streamlit as st
 import os
 import read_fileplace
-from pydub import AudioSegment
 
 #return parameter's extension example:m4a
 def return_extension(file_path):
@@ -27,11 +26,13 @@ def get_one_column_data_list(table_name, column_name):
 if __name__=="__main__":
     #if "sqlite3.OperationalError: no such table: musics"
     #read_fileplace.create_db()
+
     read_database()
+    #remove duplicates
     pagelist=list(set(read_fileplace.get_one_column_data_list("musics", "album")))
 
     selector=st.sidebar.selectbox("Albums", pagelist)
-    print(pagelist)
+
     if selector==[0]:
         #play music
         file_name="sample.m4a"
