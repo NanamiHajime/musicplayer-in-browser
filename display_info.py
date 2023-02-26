@@ -13,6 +13,3 @@ def list_sort_by_album(albums_list):
                     album_dic.setdefault(album, []).append(music)
 
     return album_dic
-
-
-pprint.pprint(list_sort_by_album(read_fileplace.get_one_row_data_list("musics")))
