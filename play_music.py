@@ -2,6 +2,7 @@ import streamlit as st
 import os
 import read_fileplace
 import display_info
+import sqlite3
 
 #return parameter's extension example:m4a
 def return_extension(file_path):
@@ -22,8 +23,10 @@ def read_database():
         read_fileplace.insert_musicdata(music_data)
 
 if __name__=="__main__":
-    #if "sqlite3.OperationalError: no such table: musics"
-    #read_fileplace.create_db()
+    try:
+        read_fileplace.create_db()
+    except sqlite3.OperationalError:
+        pass
 
     read_database()
     #remove duplicates
@@ -35,10 +38,9 @@ if __name__=="__main__":
     
     for album_name in pagelist:
         if selector==album_name:
-            #play music 修正予定
-            #file_name="sample.m4a"
-            #file_extension=return_extension(file_name)
-            #st.audio(file_name, format=f"audio/{file_extension}")
-
             for i, music in enumerate(music_info[album_name]):
-                st.button(f'[{music_info[album_name][i]["tracknumber"]}] {music_info[album_name][i]["title"]}  {music_info[album_name][i]["time_min"]}:{music_info[album_name][i]["time_sec"]}')
+                if st.button(f'[{music_info[album_name][i]["tracknumber"]}] {music_info[album_name][i]["title"]}  {music_info[album_name][i]["time_min"]}:{music_info[album_name][i]["time_sec"]}'):
+                    #play music 修正予定
+                    file_name=music_info[album_name][i]["file_place"]
+                    file_extension=return_extension(file_name)
+                    st.audio(file_name, format=f"audio/{file_extension}")
