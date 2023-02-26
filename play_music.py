@@ -19,10 +19,7 @@ def read_database():
             music_data=read_fileplace.get_musicdata_mp3(path_music)
 
         read_fileplace.insert_musicdata(music_data)
-
-def get_one_column_data_list(table_name, column_name):
-    return read_fileplace.get_one_column_data_list(table_name, column_name)
-
+        
 if __name__=="__main__":
     #if "sqlite3.OperationalError: no such table: musics"
     #read_fileplace.create_db()

@@ -143,7 +143,7 @@ def get_one_column_data_list(table_name, column_name,target_column_index=0):
 
 #get all data list
 #list in dictionary [{"title":...}, {"title":...}]
-def get_one_row_data_dic(table_name, column_name):
+def get_one_row_data_list(table_name):
     row_data_dic=[]
     cur=connect_db()[0]
 
